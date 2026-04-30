@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="SAWE — South Asian Women Entrepreneurs. A global community for South Asian women building bold businesses. Join us." />
+<title>SAWE — South Asian Women Entrepreneurs</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================
+     DESIGN TOKENS
+     ============================================ */
+  :root {
+    /* Color — warm, editorial, culturally rooted */
+    --cream: #F5EFE6;
+    --cream-deep: #EBE2D3;
+    --ivory: #FBF7F0;
+    --ink: #1A1614;
+    --ink-soft: #3D332E;
+    --plum: #4A1B2F;
+    --plum-deep: #2D0F1E;
+    --saffron: #D4622A;
+    --saffron-bright: #E87E3C;
+    --marigold: #E8A33D;
+    --gold-leaf: #B8893E;
+    --rose: #C45A6E;
+    --jade: #4A6B52;
+
+    /* Type */
+    --font-display: 'Fraunces', 'Times New Roman', serif;
+    --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* Layout */
+    --max-w: 1280px;
+    --gutter: clamp(20px, 5vw, 64px);
+    --section-pad: clamp(80px, 12vh, 140px);
+  }
+
+  /* ============================================
+     RESET + BASE
+     ============================================ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--cream);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+  /* Subtle paper grain across the whole site */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  /* ============================================
+     TYPOGRAPHY
+     ============================================ */
+  .display-xl {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(48px, 8vw, 120px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    font-variation-settings: "opsz" 144;
+  }
+  .display-lg {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(40px, 5.5vw, 76px);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 96;
+  }
+  .display-md {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    font-variation-settings: "opsz" 48;
+  }
+  .display-italic {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--saffron);
+  }
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 36px;
+    height: 1px;
+    background: currentColor;
+  }
+  .lede {
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 1.55;
+    font-weight: 400;
+    color: var(--ink-soft);
+    letter-spacing: -0.005em;
+  }
+
+  /* ============================================
+     LAYOUT UTILS
+     ============================================ */
+  .wrap {
+    max-width: var(--max-w);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    position: relative;
+    z-index: 2;
+  }
+  section { position: relative; z-index: 2; }
+
+  /* ============================================
+     NAV
+     ============================================ */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 18px var(--gutter);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.4s ease;
+  }
+  .nav.scrolled {
+    background: rgba(245, 239, 230, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 14px var(--gutter);
+    border-bottom: 1px solid rgba(74, 27, 47, 0.08);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    color: var(--plum);
+  }
+  .nav-logo span {
+    color: var(--saffron);
+    font-style: italic;
+    font-weight: 400;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    align-items: center;
+  }
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    transition: color 0.2s ease;
+    letter-spacing: 0.01em;
+  }
+  .nav-links a:hover { color: var(--saffron); }
+  .nav-cta {
+    background: var(--plum);
+    color: var(--cream);
+    padding: 11px 22px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    letter-spacing: 0.01em;
+  }
+  .nav-cta:hover {
+    background: var(--saffron);
+    transform: translateY(-1px);
+    color: var(--ivory);
+  }
+  @media (max-width: 760px) {
+    .nav-links { display: none; }
+    .nav-links .nav-cta { display: inline-flex; }
+    .nav.mobile .nav-links { display: flex; }
+  }
+
+  /* ============================================
+     BUTTONS
+     ============================================ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 32px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--plum);
+    color: var(--cream);
+  }
+  .btn-primary:hover {
+    background: var(--plum-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(74, 27, 47, 0.25);
+  }
+  .btn-saffron {
+    background: var(--saffron);
+    color: var(--ivory);
+  }
+  .btn-saffron:hover {
+    background: var(--saffron-bright);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(212, 98, 42, 0.3);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--plum);
+    border: 1.5px solid var(--plum);
+  }
+  .btn-ghost:hover {
+    background: var(--plum);
+    color: var(--cream);
+  }
+  .btn .arrow {
+    transition: transform 0.3s ease;
+  }
+  .btn:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  /* ============================================
+     HERO
+     ============================================ */
+  .hero {
+    min-height: 100vh;
+    padding: 140px var(--gutter) 80px;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 80% 60% at 100% 0%, rgba(232, 163, 61, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 50% at 0% 100%, rgba(74, 27, 47, 0.08) 0%, transparent 60%),
+      var(--cream);
+  }
+  .hero-grid {
+    max-width: var(--max-w);
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(40px, 6vw, 80px);
+    align-items: center;
+    min-height: calc(100vh - 220px);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 3;
+  }
+  .hero-eyebrow {
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero h1 {
+    margin-bottom: 32px;
+    color: var(--plum);
+    animation: fadeUp 0.9s ease 0.1s both;
+  }
+  .hero h1 .accent {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--saffron);
+  }
+  .hero h1 .underline-word {
+    position: relative;
+    display: inline-block;
+  }
+  .hero h1 .underline-word::after {
+    content: '';
+    position: absolute;
+    bottom: 0.05em;
+    left: 0;
+    right: 0;
+    height: 0.12em;
+    background: var(--marigold);
+    opacity: 0.45;
+    z-index: -1;
+    border-radius: 2px;
+  }
+  .hero-lede {
+    margin-bottom: 44px;
+    max-width: 540px;
+    animation: fadeUp 1s ease 0.2s both;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    animation: fadeUp 1.1s ease 0.3s both;
+  }
+  .hero-actions .meta {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-left: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-actions .meta strong {
+    color: var(--plum);
+    font-weight: 600;
+  }
+
+  /* Hero image — editorial frame */
+  .hero-visual {
+    position: relative;
+    aspect-ratio: 4/5;
+    animation: fadeUp 1.1s ease 0.4s both;
+  }
+  .hero-photo {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 200px 200px 12px 12px;
+    overflow: hidden;
+    background: var(--cream-deep);
+    box-shadow: 0 30px 80px rgba(74, 27, 47, 0.18);
+  }
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .hero-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(74, 27, 47, 0.15) 100%);
+  }
+
+  /* Decorative ornament — South Asian inspired pattern */
+  .ornament {
+    position: absolute;
+    color: var(--saffron);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .ornament-tl {
+    top: -20px;
+    right: -30px;
+    width: 110px;
+    animation: spin 90s linear infinite;
+  }
+  .ornament-br {
+    bottom: -40px;
+    left: -50px;
+    width: 140px;
+    color: var(--plum);
+    opacity: 0.12;
+    animation: spin 120s linear infinite reverse;
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Floating stat card overlay */
+  .hero-stat {
+    position: absolute;
+    bottom: 40px;
+    left: -40px;
+    background: var(--ivory);
+    padding: 20px 26px;
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(74, 27, 47, 0.18);
+    z-index: 4;
+    border: 1px solid rgba(74, 27, 47, 0.06);
+    animation: fadeUp 1.2s ease 0.6s both;
+  }
+  .hero-stat-num {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--plum);
+    letter-spacing: -0.02em;
+  }
+  .hero-stat-num span {
+    color: var(--saffron);
+    font-style: italic;
+    font-weight: 300;
+  }
+  .hero-stat-label {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    letter-spacing: 0.04em;
+    max-width: 160px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .hero { padding-top: 120px; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-visual { max-width: 460px; margin: 0 auto; }
+    .hero-stat { left: 0; }
+  }
+
+  /* ============================================
+     ABOUT
+     ============================================ */
+  .about {
+    padding: var(--section-pad) 0;
+    background: var(--ivory);
+    position: relative;
+  }
+  .about::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(74, 27, 47, 0.15), transparent);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(40px, 7vw, 100px);
+    align-items: start;
+  }
+  .about-side .eyebrow {
+    margin-bottom: 24px;
+  }
+  .about-side h2 {
+    color: var(--plum);
+  }
+  .about-content {
+    padding-top: 12px;
+  }
+  .about-content p {
+    margin-bottom: 24px;
+    color: var(--ink-soft);
+    font-size: 18px;
+    line-height: 1.7;
+  }
+  .about-content p:first-child {
+    font-size: 22px;
+    line-height: 1.55;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .about-content p:first-child::first-letter {
+    font-family: var(--font-display);
+    float: left;
+    font-size: 4.2em;
+    line-height: 0.85;
+    margin-right: 12px;
+    margin-top: 6px;
+    color: var(--saffron);
+    font-weight: 500;
+    font-variation-settings: "opsz" 144;
+  }
+
+  /* Values — pulled out as a visual list */
+  .values {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 24px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(74, 27, 47, 0.12);
+  }
+  .value {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .value-num {
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--saffron);
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+  .value-label {
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 500;
+    color: var(--plum);
+    letter-spacing: -0.01em;
+  }
+
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ============================================
+     OFFER (BENEFITS)
+     ============================================ */
+  .offer {
+    padding: var(--section-pad) 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 90% 0%, rgba(212, 98, 42, 0.08) 0%, transparent 50%),
+      var(--cream);
+  }
+  .offer-head {
+    max-width: 760px;
+    margin-bottom: 80px;
+  }
+  .offer-head .eyebrow { margin-bottom: 24px; }
+  .offer-head h2 {
+    color: var(--plum);
+    margin-bottom: 24px;
+  }
+  .offer-head p {
+    font-size: 19px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  .benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0;
+    border-top: 1px solid rgba(74, 27, 47, 0.15);
+    border-left: 1px solid rgba(74, 27, 47, 0.15);
+  }
+  .benefit {
+    padding: 44px 32px 40px;
+    border-right: 1px solid rgba(74, 27, 47, 0.15);
+    border-bottom: 1px solid rgba(74, 27, 47, 0.15);
+    background: var(--cream);
+    transition: all 0.4s ease;
+    position: relative;
+    cursor: default;
+  }
+  .benefit:hover {
+    background: var(--ivory);
+  }
+  .benefit:hover .benefit-icon {
+    background: var(--saffron);
+    color: var(--ivory);
+    transform: rotate(-6deg);
+  }
+  .benefit-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: rgba(212, 98, 42, 0.12);
+    color: var(--saffron);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .benefit-icon svg { width: 26px; height: 26px; }
+  .benefit-num {
+    position: absolute;
+    top: 28px;
+    right: 32px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--ink-soft);
+    opacity: 0.4;
+    letter-spacing: 0.1em;
+  }
+  .benefit h3 {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--plum);
+    margin-bottom: 14px;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+  }
+  .benefit p {
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  /* ============================================
+     TESTIMONIALS
+     ============================================ */
+  .testimonials {
+    padding: var(--section-pad) 0;
+    background: var(--plum);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .testimonials::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 60% at 0% 0%, rgba(232, 163, 61, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 100% 100%, rgba(212, 98, 42, 0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .testimonials-head {
+    text-align: center;
+    margin-bottom: 80px;
+    position: relative;
+    z-index: 2;
+  }
+  .testimonials-head .eyebrow { color: var(--marigold); }
+  .testimonials-head .eyebrow::before { background: var(--marigold); }
+  .testimonials-head h2 {
+    color: var(--cream);
+    margin-top: 24px;
+  }
+  .testimonials-head h2 .accent {
+    color: var(--marigold);
+    font-style: italic;
+    font-weight: 300;
+  }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+    position: relative;
+    z-index: 2;
+  }
+  .testimonial {
+    background: rgba(251, 247, 240, 0.05);
+    border: 1px solid rgba(245, 239, 230, 0.12);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px 32px 32px;
+    position: relative;
+    transition: all 0.4s ease;
+  }
+  .testimonial:hover {
+    background: rgba(251, 247, 240, 0.08);
+    transform: translateY(-4px);
+    border-color: rgba(232, 163, 61, 0.4);
+  }
+  .testimonial-mark {
+    font-family: var(--font-display);
+    font-size: 80px;
+    line-height: 0.6;
+    color: var(--marigold);
+    opacity: 0.5;
+    position: absolute;
+    top: 24px;
+    right: 32px;
+  }
+  .testimonial-quote {
+    font-family: var(--font-display);
+    font-size: 21px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+    font-style: italic;
+    font-variation-settings: "opsz" 36;
+  }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(245, 239, 230, 0.15);
+  }
+  .testimonial-photo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--cream-deep);
+    flex-shrink: 0;
+  }
+  .testimonial-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .testimonial-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--cream);
+    margin-bottom: 2px;
+  }
+  .testimonial-role {
+    font-size: 13px;
+    color: var(--marigold);
+    letter-spacing: 0.02em;
+  }
+  .testimonial-placeholder-note {
+    text-align: center;
+    margin-top: 56px;
+    font-size: 13px;
+    color: rgba(245, 239, 230, 0.55);
+    letter-spacing: 0.05em;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ============================================
+     JOIN
+     ============================================ */
+  .join {
+    padding: var(--section-pad) 0;
+    background: var(--ivory);
+  }
+  .join-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(40px, 7vw, 90px);
+    align-items: center;
+  }
+  .join-content .eyebrow { margin-bottom: 24px; }
+  .join-content h2 {
+    color: var(--plum);
+    margin-bottom: 28px;
+  }
+  .join-content h2 .accent {
+    color: var(--saffron);
+    font-style: italic;
+    font-weight: 300;
+  }
+  .join-content > p {
+    font-size: 18px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    max-width: 540px;
+  }
+
+  .steps {
+    list-style: none;
+    margin-bottom: 44px;
+  }
+  .step {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(74, 27, 47, 0.1);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--saffron);
+    line-height: 1;
+    min-width: 52px;
+    letter-spacing: -0.02em;
+  }
+  .step-text strong {
+    display: block;
+    font-size: 17px;
+    color: var(--plum);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .step-text span {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .join-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  /* Join visual — collage-style */
+  .join-visual {
+    position: relative;
+    aspect-ratio: 1/1.1;
+  }
+  .join-image-main {
+    position: absolute;
+    inset: 0 30px 60px 0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(74, 27, 47, 0.2);
+    z-index: 2;
+  }
+  .join-image-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .join-image-accent {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 55%;
+    aspect-ratio: 4/5;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(74, 27, 47, 0.25);
+    border: 6px solid var(--ivory);
+    z-index: 3;
+  }
+  .join-image-accent img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .join-marigold {
+    position: absolute;
+    top: -20px;
+    left: -30px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: var(--marigold);
+    opacity: 0.85;
+    z-index: 1;
+  }
+
+  @media (max-width: 900px) {
+    .join-grid { grid-template-columns: 1fr; }
+    .join-visual { max-width: 460px; margin: 0 auto; }
+  }
+
+  /* ============================================
+     CONTACT / FOOTER
+     ============================================ */
+  .contact {
+    padding: var(--section-pad) 0 60px;
+    background: var(--plum-deep);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .contact::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--marigold), transparent);
+    opacity: 0.4;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(40px, 7vw, 90px);
+    align-items: start;
+    margin-bottom: 80px;
+  }
+  .contact-info .eyebrow {
+    color: var(--marigold);
+    margin-bottom: 24px;
+  }
+  .contact-info .eyebrow::before { background: var(--marigold); }
+  .contact-info h2 {
+    color: var(--cream);
+    margin-bottom: 20px;
+  }
+  .contact-info h2 .accent {
+    color: var(--marigold);
+    font-style: italic;
+    font-weight: 300;
+  }
+  .contact-info p {
+    font-size: 17px;
+    color: rgba(245, 239, 230, 0.75);
+    line-height: 1.65;
+    margin-bottom: 36px;
+  }
+
+  .contact-channels {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 36px;
+  }
+  .channel {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--cream);
+    transition: color 0.2s ease;
+    font-size: 15px;
+  }
+  .channel:hover { color: var(--marigold); }
+  .channel-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(232, 163, 61, 0.12);
+    border: 1px solid rgba(232, 163, 61, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--marigold);
+    flex-shrink: 0;
+  }
+  .channel-icon svg { width: 16px; height: 16px; }
+  .channel-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245, 239, 230, 0.55);
+    margin-bottom: 2px;
+  }
+  .channel-value { font-weight: 500; }
+
+  .socials {
+    display: flex;
+    gap: 12px;
+  }
+  .social {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(245, 239, 230, 0.06);
+    border: 1px solid rgba(245, 239, 230, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream);
+    transition: all 0.3s ease;
+  }
+  .social:hover {
+    background: var(--marigold);
+    color: var(--plum-deep);
+    border-color: var(--marigold);
+    transform: translateY(-2px);
+  }
+  .social svg { width: 18px; height: 18px; }
+
+  /* Form */
+  .contact-form {
+    background: rgba(245, 239, 230, 0.04);
+    border: 1px solid rgba(245, 239, 230, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+  }
+  .field-full { margin-bottom: 18px; }
+  .field label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--marigold);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .field input,
+  .field textarea {
+    background: rgba(245, 239, 230, 0.06);
+    border: 1px solid rgba(245, 239, 230, 0.15);
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: var(--cream);
+    font-family: var(--font-body);
+    font-size: 15px;
+    transition: all 0.3s ease;
+  }
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--marigold);
+    background: rgba(245, 239, 230, 0.1);
+    box-shadow: 0 0 0 4px rgba(232, 163, 61, 0.1);
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: rgba(245, 239, 230, 0.35);
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 130px;
+    font-family: var(--font-body);
+  }
+  .form-submit {
+    background: var(--marigold);
+    color: var(--plum-deep);
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    letter-spacing: 0.01em;
+  }
+  .form-submit:hover {
+    background: var(--saffron-bright);
+    color: var(--ivory);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(232, 163, 61, 0.3);
+  }
+  .form-note {
+    font-size: 12px;
+    color: rgba(245, 239, 230, 0.5);
+    margin-top: 16px;
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+  .form-success {
+    display: none;
+    background: rgba(74, 107, 82, 0.2);
+    border: 1px solid var(--jade);
+    border-radius: 10px;
+    padding: 14px 18px;
+    color: var(--cream);
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+  .form-success.show { display: block; }
+
+  /* Footer bar */
+  .footer-bar {
+    border-top: 1px solid rgba(245, 239, 230, 0.1);
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-logo {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 0.12em;
+    color: var(--cream);
+  }
+  .footer-logo span {
+    color: var(--marigold);
+    font-style: italic;
+    font-weight: 400;
+  }
+  .footer-copy {
+    font-size: 13px;
+    color: rgba(245, 239, 230, 0.5);
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 760px) {
+    .contact-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .contact-form { padding: 28px; }
+  }
+
+  /* ============================================
+     SCROLL REVEAL
+     ============================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ============= NAV ============= -->
+<nav class="nav" id="nav">
+  <a href="#top" class="nav-logo">SAWE<span>.</span></a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#offer">Membership</a>
+    <a href="#stories">Stories</a>
+    <a href="#join">Join</a>
+    <a href="#join" class="nav-cta">Become a Member</a>
+  </div>
+</nav>
+
+<!-- ============= HERO ============= -->
+<header class="hero" id="top">
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-eyebrow eyebrow">A Global Community for South Asian Women</div>
+      <h1 class="display-xl">
+        Where ambition meets <span class="display-italic">belonging.</span>
+      </h1>
+      <p class="hero-lede lede">
+        SAWE is the home for South Asian women building bold businesses — a space to be seen, supported, and celebrated by women who understand the journey, the culture, and the courage it takes.
+      </p>
+      <div class="hero-actions">
+        <a href="#join" class="btn btn-primary">
+          Join Our Community
+          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+        <a href="#about" class="btn btn-ghost">Our Story</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <!-- Decorative ornament SVG (mandala-inspired) -->
+      <svg class="ornament ornament-tl" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.8">
+        <circle cx="50" cy="50" r="48"/>
+        <circle cx="50" cy="50" r="36"/>
+        <circle cx="50" cy="50" r="24"/>
+        <g>
+          <path d="M50 2 L50 98 M2 50 L98 50 M14.6 14.6 L85.4 85.4 M85.4 14.6 L14.6 85.4"/>
+        </g>
+        <g>
+          <circle cx="50" cy="14" r="3"/>
+          <circle cx="50" cy="86" r="3"/>
+          <circle cx="14" cy="50" r="3"/>
+          <circle cx="86" cy="50" r="3"/>
+        </g>
+      </svg>
+
+      <div class="hero-photo">
+        <img
+          src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=900&q=80&auto=format&fit=crop"
+          alt="South Asian women entrepreneurs in conversation"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="hero-stat">
+        <div class="hero-stat-num">A new <span>chapter</span></div>
+        <div class="hero-stat-label">For founders who've been writing it alone.</div>
+      </div>
+
+      <svg class="ornament ornament-br" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.8">
+        <circle cx="50" cy="50" r="48"/>
+        <circle cx="50" cy="50" r="32"/>
+        <g>
+          <path d="M50 5 Q60 25 50 50 Q40 75 50 95 M5 50 Q25 40 50 50 Q75 60 95 50"/>
+          <path d="M19 19 Q35 35 50 50 Q65 65 81 81 M81 19 Q65 35 50 50 Q35 65 19 81"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ============= ABOUT ============= -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-side reveal">
+        <div class="eyebrow">Our Mission</div>
+        <h2 class="display-lg">
+          Empowering South Asian women entrepreneurs to <em class="display-italic">thrive.</em>
+        </h2>
+      </div>
+
+      <div class="about-content reveal">
+        <p>
+          South Asian women carry generations of resilience into every venture they build — and yet, too often, we navigate that journey without a network that truly understands us. SAWE was born to change that.
+        </p>
+        <p>
+          From first-generation founders launching their first idea, to seasoned entrepreneurs scaling across continents, we share a particular set of challenges: the weight of family expectation, the cultural conversations that don't fit neatly into mainstream business advice, the experience of being the only one in the room. SAWE is the room where you are not the only one.
+        </p>
+        <p>
+          Founded by Lopa Banerjee, our community exists to connect, mentor, and elevate South Asian women entrepreneurs at every stage. We are a space where ambition is expected, vulnerability is welcomed, and your full story — heritage and all — is an asset, not something to translate.
+        </p>
+
+        <div class="values">
+          <div class="value">
+            <span class="value-num">01</span>
+            <span class="value-label">Sisterhood</span>
+          </div>
+          <div class="value">
+            <span class="value-num">02</span>
+            <span class="value-label">Mentorship</span>
+          </div>
+          <div class="value">
+            <span class="value-num">03</span>
+            <span class="value-label">Cultural<br/>Fluency</span>
+          </div>
+          <div class="value">
+            <span class="value-num">04</span>
+            <span class="value-label">Collaboration</span>
+          </div>
+          <div class="value">
+            <span class="value-num">05</span>
+            <span class="value-label">Growth</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= OFFER / BENEFITS ============= -->
+<section class="offer" id="offer">
+  <div class="wrap">
+    <div class="offer-head reveal">
+      <div class="eyebrow">Membership</div>
+      <h2 class="display-lg">
+        Your network. Your growth. <em class="display-italic">Your success.</em>
+      </h2>
+      <p>
+        Membership is more than a directory — it's a living community of women who show up for each other. Here's what you'll find inside.
+      </p>
+    </div>
+
+    <div class="benefits">
+      <div class="benefit reveal">
+        <span class="benefit-num">01</span>
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+            <path d="M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+        </div>
+        <h3>Community & Connection</h3>
+        <p>Build real relationships with South Asian women founders who get it — across industries, stages, and time zones.</p>
+      </div>
+
+      <div class="benefit reveal">
+        <span class="benefit-num">02</span>
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h3>Mentorship & Guidance</h3>
+        <p>Learn directly from experienced founders who've walked the path. Honest conversations, practical wisdom, no gatekeeping.</p>
+      </div>
+
+      <div class="benefit reveal">
+        <span class="benefit-num">03</span>
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+            <line x1="12" y1="22.08" x2="12" y2="12"/>
+          </svg>
+        </div>
+        <h3>Resources & Opportunities</h3>
+        <p>Curated tools, introductions, partnership leads, and the kind of insight that usually only travels through closed networks.</p>
+      </div>
+
+      <div class="benefit reveal">
+        <span class="benefit-num">04</span>
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+          </svg>
+        </div>
+        <h3>Cultural Fluency</h3>
+        <p>Navigate the family conversations, cultural dynamics, and identity questions that other rooms don't have language for.</p>
+      </div>
+
+      <div class="benefit reveal">
+        <span class="benefit-num">05</span>
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <h3>Growth & Development</h3>
+        <p>Workshops, webinars, and live discussions on scaling, hiring, raising capital, and leading without burning out.</p>
+      </div>
+
+      <div class="benefit reveal">
+        <span class="benefit-num">06</span>
+        <div class="benefit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20"/>
+            <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+          </svg>
+        </div>
+        <h3>Global Reach, Rooted Identity</h3>
+        <p>Members across the US, UK, Canada, India, and beyond — a worldwide network grounded in shared heritage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= TESTIMONIALS ============= -->
+<section class="testimonials" id="stories">
+  <div class="wrap">
+    <div class="testimonials-head reveal">
+      <div class="eyebrow">Voices of Our Community</div>
+      <h2 class="display-lg">
+        Stories from women who <em class="accent">found their people.</em>
+      </h2>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial reveal">
+        <span class="testimonial-mark">"</span>
+        <p class="testimonial-quote">SAWE gave me the courage to launch a business I'd been quietly building for years. For the first time, I wasn't translating — I was just being.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-photo">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80&auto=format&fit=crop" alt="" loading="lazy" />
+          </div>
+          <div>
+            <div class="testimonial-name">Member Name</div>
+            <div class="testimonial-role">Founder · Wellness Brand</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial reveal">
+        <span class="testimonial-mark">"</span>
+        <p class="testimonial-quote">Finding women who understood both my business challenges and my family dynamics changed everything. This is the network I didn't know I'd been searching for.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-photo">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80&auto=format&fit=crop" alt="" loading="lazy" />
+          </div>
+          <div>
+            <div class="testimonial-name">Member Name</div>
+            <div class="testimonial-role">CEO · Tech Startup</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial reveal">
+        <span class="testimonial-mark">"</span>
+        <p class="testimonial-quote">Within a month of joining, I'd made three introductions that turned into real partnerships. SAWE isn't passive networking — it's active sisterhood.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-photo">
+            <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&q=80&auto=format&fit=crop" alt="" loading="lazy" />
+          </div>
+          <div>
+            <div class="testimonial-name">Member Name</div>
+            <div class="testimonial-role">Founder · Consulting Firm</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="testimonial-placeholder-note">↑ Placeholder testimonials — to be replaced with real member voices.</p>
+  </div>
+</section>
+
+<!-- ============= JOIN ============= -->
+<section class="join" id="join">
+  <div class="wrap">
+    <div class="join-grid">
+      <div class="join-content reveal">
+        <div class="eyebrow">Become a Member</div>
+        <h2 class="display-lg">
+          Ready to elevate your <em class="accent">entrepreneurial journey?</em>
+        </h2>
+        <p>
+          Joining SAWE takes a few minutes, but the relationships you build can shape the rest of your career. Three simple steps:
+        </p>
+
+        <ol class="steps">
+          <li class="step">
+            <div class="step-num">01</div>
+            <div class="step-text">
+              <strong>Tell us about you</strong>
+              <span>Share who you are, what you're building, and where you are in your journey.</span>
+            </div>
+          </li>
+          <li class="step">
+            <div class="step-num">02</div>
+            <div class="step-text">
+              <strong>Get welcomed in</strong>
+              <span>We'll personally introduce you to the community and to members aligned with your goals.</span>
+            </div>
+          </li>
+          <li class="step">
+            <div class="step-num">03</div>
+            <div class="step-text">
+              <strong>Start showing up</strong>
+              <span>Join conversations, attend events, find your mentors — and become one for someone else.</span>
+            </div>
+          </li>
+        </ol>
+
+        <div class="join-actions">
+          <a href="#contact" class="btn btn-saffron">
+            Join SAWE Today
+            <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+          <a href="#contact" class="btn btn-ghost">Learn More</a>
+        </div>
+      </div>
+
+      <div class="join-visual reveal">
+        <div class="join-marigold"></div>
+        <div class="join-image-main">
+          <img
+            src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&q=80&auto=format&fit=crop"
+            alt="Women collaborating in a meeting"
+            loading="lazy"
+          />
+        </div>
+        <div class="join-image-accent">
+          <img
+            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80&auto=format&fit=crop"
+            alt="Confident woman entrepreneur"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= CONTACT / FOOTER ============= -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="eyebrow">Connect With Us</div>
+        <h2 class="display-lg">
+          Let's <em class="accent">talk.</em>
+        </h2>
+        <p>
+          Questions about membership, partnership, or just want to say hello? We'd love to hear from you.
+        </p>
+
+        <div class="contact-channels">
+          <a href="mailto:hello@sawe.community" class="channel">
+            <div class="channel-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div>
+              <div class="channel-label">Email</div>
+              <div class="channel-value">hello@sawe.community</div>
+            </div>
+          </a>
+
+          <a href="https://www.linkedin.com/company/sawe-south-asian-women-entrepreneurs/" target="_blank" rel="noopener" class="channel">
+            <div class="channel-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="channel-label">LinkedIn — SAWE</div>
+              <div class="channel-value">Follow our community page</div>
+            </div>
+          </a>
+
+          <a href="https://www.linkedin.com/in/lopamudrabanerjeeentrepreneur/" target="_blank" rel="noopener" class="channel">
+            <div class="channel-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div>
+              <div class="channel-label">Founder</div>
+              <div class="channel-value">Connect with Lopa Banerjee</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="socials">
+          <a href="https://www.linkedin.com/company/sawe-south-asian-women-entrepreneurs/" target="_blank" rel="noopener" aria-label="SAWE on LinkedIn" class="social">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/lopamudrabanerjeeentrepreneur/" target="_blank" rel="noopener" aria-label="Lopa Banerjee on LinkedIn" class="social">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </a>
+          <a href="mailto:hello@sawe.community" aria-label="Email SAWE" class="social">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-success" id="formSuccess">
+          ✓ Thanks for reaching out — we'll be in touch soon.
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" placeholder="Priya" required />
+          </div>
+          <div class="field">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Patel" required />
+          </div>
+        </div>
+        <div class="field field-full">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@business.com" required />
+        </div>
+        <div class="field field-full">
+          <label for="company">Business / Venture (Optional)</label>
+          <input type="text" id="company" name="company" placeholder="What are you building?" />
+        </div>
+        <div class="field field-full">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell us a little about yourself and why you're interested in SAWE." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">
+          Send Message
+          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </button>
+        <p class="form-note">By submitting you agree to receive occasional emails from SAWE. Unsubscribe anytime.</p>
+      </form>
+    </div>
+
+    <div class="footer-bar">
+      <div class="footer-logo">SAWE<span>.</span></div>
+      <div class="footer-copy">
+        © <span id="year">2026</span> SAWE — South Asian Women Entrepreneurs · Founded by Lopa Banerjee
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Sticky nav style on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // Scroll-triggered reveals
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Stagger benefit cards
+  document.querySelectorAll('.benefit').forEach((el, i) => {
+    el.style.transitionDelay = (i * 0.08) + 's';
+  });
+  document.querySelectorAll('.testimonial').forEach((el, i) => {
+    el.style.transitionDelay = (i * 0.12) + 's';
+  });
+
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Form — graceful handling
+  // To make the form actually send messages, replace YOUR_FORM_ID in the
+  // <form action="..."> attribute with your Formspree form ID, OR change
+  // the action to your own backend / Netlify Forms endpoint.
+  const form = document.getElementById('contactForm');
+  const successEl = document.getElementById('formSuccess');
+  form.addEventListener('submit', (e) => {
+    // If the action still contains the placeholder, fall back to mailto.
+    if (form.action.includes('YOUR_FORM_ID')) {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const subject = encodeURIComponent(`SAWE inquiry — ${fd.get('firstName')} ${fd.get('lastName')}`);
+      const body = encodeURIComponent(
+        `Name: ${fd.get('firstName')} ${fd.get('lastName')}\n` +
+        `Email: ${fd.get('email')}\n` +
+        `Business: ${fd.get('company') || '—'}\n\n` +
+        `${fd.get('message')}`
+      );
+      window.location.href = `mailto:hello@sawe.community?subject=${subject}&body=${body}`;
+      successEl.classList.add('show');
+    }
+    // Otherwise let Formspree (or whatever endpoint) handle it natively.
+  });
+</script>
+
+</body>
+</html>
